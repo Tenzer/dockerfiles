@@ -1,6 +1,6 @@
 # tenzer/fpm
 
-Image with [FPM](https://github.com/jordansissel/fpm) pre-installed with support for all input and output options, except the Solaris and Mac OS X outputs due to missing in Debian to support these.
+Image with [FPM](https://github.com/jordansissel/fpm) pre-installed with support for all input and output options, except the Solaris and Mac OS X outputs due to missing support in Debian for their formats.
 
 This image goes nicely with [Berth](https://github.com/FalconSocial/berth) as a quick, easy and reproduceable solution for creating and converting packages between all sorts of different formats.
 
