@@ -7,4 +7,5 @@ RUN apt-get update \
 
 RUN gem install fpm
 
-CMD [ "fpm" ]
+ENTRYPOINT [ "fpm" ]
+CMD [ "--help" ]
