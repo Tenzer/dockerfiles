@@ -23,3 +23,11 @@ The following output types are suppoted:
 - tar.gz archives
 
 Please see either `fpm --help` or the [FPM wiki](https://github.com/jordansissel/fpm/wiki#usage) for more information about how to use FPM.
+
+
+## Variants
+
+Two different variants of `tenzer/fpm` are available:
+
+- `:latest` which has `ENTRYPOINT` set to `fpm`.
+- `:no-entrypoint` which does not have `ENTRYPOINT` set but instead have `CMD` set to `fpm`. This is useful for certain systems, like [GitLab CI](https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1421), which does not support overriding `ENTRYPOINT`.
