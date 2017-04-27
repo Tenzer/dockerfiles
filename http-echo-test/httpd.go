@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -16,8 +17,13 @@ func requestHandler(response http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(response, "Client:", request.RemoteAddr)
 
 	fmt.Fprintln(response, "\nHeaders:\n--------")
-	for key, value := range request.Header {
-		fmt.Fprintf(response, "%v: %v\n", key, strings.Join(value, ", "))
+	var headers []string
+	for name := range request.Header {
+		headers = append(headers, name)
+	}
+	sort.Strings(headers)
+	for _, name := range headers {
+		fmt.Fprintf(response, "%v: %v\n", name, strings.Join(request.Header[name], ", "))
 	}
 
 	log.Printf("%v %v (%v)\n", request.Method, request.URL, request.RemoteAddr)
