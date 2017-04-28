@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var hostname string
+
 func requestHandler(response http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(response, "Method:", request.Method)
 	fmt.Fprintln(response, "Host:", request.Host)
@@ -25,6 +27,8 @@ func requestHandler(response http.ResponseWriter, request *http.Request) {
 	for _, name := range headers {
 		fmt.Fprintf(response, "%v: %v\n", name, strings.Join(request.Header[name], ", "))
 	}
+
+	fmt.Fprintln(response, "\nServer:", hostname)
 
 	log.Printf("%v %v (%v)\n", request.Method, request.URL, request.RemoteAddr)
 }
@@ -48,6 +52,8 @@ func main() {
 			log.Fatalln(err)
 		}
 	}
+
+	hostname, _ = os.Hostname()
 
 	log.Printf("Listening on http://0.0.0.0:%v\n", listenPort)
 	http.HandleFunc("/", requestHandler)
