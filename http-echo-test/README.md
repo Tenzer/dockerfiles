@@ -24,7 +24,3 @@ Make a request with something like `curl`, and you will get the following respon
     --------
     User-Agent: curl/7.43.0
     Accept: */*
-
-## Compiling the HTTP server
-
-    GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -i httpd.go
