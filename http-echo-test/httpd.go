@@ -13,7 +13,7 @@ import (
 var hostname string
 
 func requestHandler(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(response, "Server:\n", hostname)
+	fmt.Fprintf(response, "Server: %v\n\n", hostname)
 
 	fmt.Fprintln(response, "Method:", request.Method)
 	fmt.Fprintln(response, "Host:", request.Host)
