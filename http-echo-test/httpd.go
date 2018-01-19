@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -12,6 +13,8 @@ import (
 var hostname string
 
 func requestHandler(response http.ResponseWriter, request *http.Request) {
+	fmt.Fprintln(response, "Server:\n", hostname)
+
 	fmt.Fprintln(response, "Method:", request.Method)
 	fmt.Fprintln(response, "Host:", request.Host)
 	fmt.Fprintln(response, "URL:", request.URL)
@@ -28,7 +31,22 @@ func requestHandler(response http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(response, "%v: %v\n", name, strings.Join(request.Header[name], ", "))
 	}
 
-	fmt.Fprintln(response, "\nServer:", hostname)
+	_ = request.ParseMultipartForm(100000)
+	if len(request.PostForm) > 0 {
+		fmt.Fprintln(response, "\nForm data:\n----------")
+		for key, value := range request.PostForm {
+			fmt.Fprintf(response, "%v: %v\n", key, value)
+		}
+	}
+
+	body, err := ioutil.ReadAll(request.Body)
+	if err != nil {
+		log.Println("Error while reading request body:", err)
+	}
+	if len(body) > 0 {
+		fmt.Fprintln(response, "\nRequest body:\n-------------")
+		fmt.Fprintln(response, string(body))
+	}
 
 	log.Printf("%v %v (%v)\n", request.Method, request.URL, request.RemoteAddr)
 }
