@@ -30,5 +30,4 @@ ENV PATH="$PATH:/usr/local/node/bin" LC_ALL="C.UTF-8"
 
 RUN gem install fpm
 
-ENTRYPOINT [ "fpm" ]
 CMD [ "--help" ]
