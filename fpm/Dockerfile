@@ -23,7 +23,7 @@ RUN apt-get update && \
 RUN easy_install virtualenv-tools
 
 RUN mkdir --parents /usr/local/node && \
-    curl --silent https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-x64.tar.xz | \
+    curl --silent https://nodejs.org/dist/v8.11.2/node-v8.11.2-linux-x64.tar.xz | \
     tar --extract --xz --directory /usr/local/node --strip-components 1 --file -
 
 ENV PATH="$PATH:/usr/local/node/bin" LC_ALL="C.UTF-8"
