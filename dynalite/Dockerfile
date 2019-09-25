@@ -8,7 +8,7 @@ RUN apk add --no-cache tini \
         g++ \
         make \
         python \
-    && su node -c "npm install --global dynalite@2.3.2" \
+    && su node -c "npm install --global dynalite@3.0.0" \
     && su node -c "npm cache clean --force" \
     && apk del .install-deps \
     && mkdir /var/lib/dynalite \
