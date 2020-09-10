@@ -8,7 +8,7 @@ RUN apk add --no-cache tini \
         g++ \
         make \
         python \
-    && su node -c "npm install --global kinesalite@3.3.1" \
+    && su node -c "npm install --global kinesalite@3.3.2" \
     && su node -c "npm cache clean --force" \
     && apk del .install-deps \
     && mkdir /var/lib/kinesalite \
