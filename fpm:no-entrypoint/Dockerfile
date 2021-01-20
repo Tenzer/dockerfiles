@@ -7,6 +7,7 @@ RUN apt-get update && \
         cpio \
         curl \
         gcc \
+        git \
         libarchive-tools \
         make \
         php-pear \
