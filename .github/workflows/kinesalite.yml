@@ -1,16 +1,16 @@
 ---
-name: dynalite
+name: kinesalite
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/dynalite.yml
-      - dynalite/**
+      - .github/workflows/kinesalite.yml
+      - kinesalite/**
 
 jobs:
-  dynalite:
+  kinesalite:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -31,8 +31,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: dynalite/
-          tags: tenzer/dynalite:latest
+          context: kinesalite/
+          tags: tenzer/kinesalite:latest
           platforms: |
             linux/amd64
             linux/arm64

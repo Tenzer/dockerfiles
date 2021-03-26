@@ -1,16 +1,16 @@
 ---
-name: dynalite
+name: uwsgi-werkzeug-echo
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/dynalite.yml
-      - dynalite/**
+      - .github/workflows/uwsgi-werkzeug-echo.yml
+      - uwsgi-werkzeug-echo/**
 
 jobs:
-  dynalite:
+  uwsgi-werkzeug-echo:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -31,8 +31,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: dynalite/
-          tags: tenzer/dynalite:latest
+          context: uwsgi-werkzeug-echo/
+          tags: tenzer/uwsgi-werkzeug-echo:latest
           platforms: |
             linux/amd64
             linux/arm64

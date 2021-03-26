@@ -1,16 +1,16 @@
 ---
-name: dynalite
+name: fpm
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/dynalite.yml
-      - dynalite/**
+      - .github/workflows/fpm.yml
+      - fpm/**
 
 jobs:
-  dynalite:
+  fpm:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -28,11 +28,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push fpm:no-entrypoint
         uses: docker/build-push-action@v2
         with:
-          context: dynalite/
-          tags: tenzer/dynalite:latest
+          context: fpm/
+          tags: tenzer/fpm:no-entrypoint
+          platforms: |
+            linux/amd64
+            linux/arm64
+          push: true
+
+      - name: Build and push fpm:latest
+        uses: docker/build-push-action@v2
+        with:
+          context: fpm/
+          file: Dockerfile.entrypoint
+          tags: tenzer/fpm:latest
           platforms: |
             linux/amd64
             linux/arm64
