@@ -1,6 +1,7 @@
 # Compile binary
 FROM golang:alpine as compile
 
+# hadolint ignore=DL3045
 COPY httpd.go .
 RUN CGO_ENABLED=0 go build -i httpd.go
 

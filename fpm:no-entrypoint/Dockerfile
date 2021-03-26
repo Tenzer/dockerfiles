@@ -1,5 +1,6 @@
 FROM ruby:2.4-slim-stretch
-MAINTAINER Jeppe Fihl-Pearson <docker@tenzer.dk>
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
