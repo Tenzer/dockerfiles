@@ -28,19 +28,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push fpm:no-entrypoint
-        uses: docker/build-push-action@v2
-        with:
-          context: fpm/
-          tags: tenzer/fpm:no-entrypoint
-          platforms: linux/amd64  # TODO: Add arm64 support
-          push: true
-
       - name: Build and push fpm:latest
         uses: docker/build-push-action@v2
         with:
           context: fpm/
-          file: fpm/Dockerfile.entrypoint
           tags: tenzer/fpm:latest
           platforms: linux/amd64  # TODO: Add arm64 support
           push: true
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
+
+      - name: Build and push fpm:no-entrypoint
+        uses: docker/build-push-action@v2
+        with:
+          context: fpm/
+          file: fpm/Dockerfile.no-entrypoint
+          tags: tenzer/fpm:no-entrypoint
+          platforms: linux/amd64  # TODO: Add arm64 support
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache

@@ -1,4 +1,0 @@
-FROM fpm:no-entrypoint
-
-ENTRYPOINT [ "fpm" ]
-CMD [ "--help" ]
