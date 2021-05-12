@@ -12,7 +12,9 @@ RUN apt-get update && \
         libarchive-tools \
         make \
         php-pear \
+        python-pip \
         python-setuptools \
+        python-wheel \
         rpm \
         unzip \
         virtualenv \
@@ -22,7 +24,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm --recursive /var/lib/apt/lists/*
 
-RUN easy_install virtualenv-tools
+RUN pip install --no-cache-dir virtualenv-tools
 
 RUN mkdir --parents /usr/local/node && \
     curl --silent https://nodejs.org/dist/v8.11.2/node-v8.11.2-linux-x64.tar.xz | \
