@@ -32,7 +32,7 @@ RUN mkdir --parents /usr/local/node && \
 
 ENV PATH="$PATH:/usr/local/node/bin" LC_ALL="C.UTF-8"
 
-RUN gem install fpm
+RUN gem install fpm --version=1.13.0
 
 ENTRYPOINT [ "fpm" ]
 CMD [ "--help" ]
