@@ -1,4 +1,4 @@
-FROM ruby:2.4-slim-stretch
+FROM ruby:2.4-slim-stretch AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -33,6 +33,11 @@ RUN mkdir --parents /usr/local/node && \
 ENV PATH="$PATH:/usr/local/node/bin" LC_ALL="C.UTF-8"
 
 RUN gem install fpm --version=1.13.0
+
+CMD [ "fpm", "--help" ]
+
+
+FROM no-entrypoint AS with-entrypoint
 
 ENTRYPOINT [ "fpm" ]
 CMD [ "--help" ]

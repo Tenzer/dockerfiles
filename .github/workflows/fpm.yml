@@ -32,6 +32,7 @@ jobs:
         uses: docker/build-push-action@v2.5.0
         with:
           context: fpm/
+          target: with-entrypoint
           tags: tenzer/fpm:latest
           platforms: linux/amd64  # TODO: Add arm64 support
           push: true
@@ -41,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v2.5.0
         with:
           context: fpm/
-          file: fpm/Dockerfile.no-entrypoint
+          target: no-entrypoint
           tags: tenzer/fpm:no-entrypoint
           platforms: linux/amd64  # TODO: Add arm64 support
           push: true
