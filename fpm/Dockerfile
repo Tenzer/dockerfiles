@@ -1,38 +1,106 @@
-FROM ruby:2.4-slim-stretch AS no-entrypoint
+FROM ruby:3.0-slim-buster AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        binutils \
         cpanminus \
         cpio \
         curl \
-        gcc \
-        git \
         libarchive-tools \
         make \
         php-pear \
         python-pip \
-        python-setuptools \
-        python-wheel \
         rpm \
+        squashfs-tools \
         unzip \
-        virtualenv \
         xz-utils \
         zip \
+        zstd \
     && \
     apt-get clean && \
     rm --recursive /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir virtualenv-tools
+RUN pip install --no-cache-dir \
+        # 52+ does not have easy_install
+        "setuptools < 52" \
+    && \
+    pip install --no-cache-dir \
+        virtualenv \
+        virtualenv-tools3
 
-RUN mkdir --parents /usr/local/node && \
-    curl --silent https://nodejs.org/dist/v8.11.2/node-v8.11.2-linux-x64.tar.xz | \
+ARG NODEJS_VERSION=14.17.1
+ARG TARGETPLATFORM
+RUN arch=x64; \
+    [ "$TARGETPLATFORM" == "linux/arm64" ] && arch=arm64; \
+    mkdir --parents /usr/local/node && \
+    curl --silent "https://nodejs.org/dist/v${NODEJS_VERSION}/node-v${NODEJS_VERSION}-linux-${arch}.tar.xz" | \
     tar --extract --xz --directory /usr/local/node --strip-components 1 --file -
 
-ENV PATH="$PATH:/usr/local/node/bin" LC_ALL="C.UTF-8"
+ENV PATH="$PATH:/usr/local/node/bin"
 
-RUN gem install fpm --version=1.13.0
+RUN gem install fpm --version=1.13.0 && \
+    rm -r ~/.local/share/gem /usr/local/bundle/cache
+
+RUN mkdir /tmp/tests && \
+    pushd /tmp/tests && \
+    echo 'This is a test' > package-data && \
+
+    # dir -> dir
+    fpm --input-type=dir --output-type=dir --name=test package-data && \
+    # dir -> deb
+    fpm --input-type=dir --output-type=deb --name=test --architecture=all package-data && \
+    # dir -> rpm
+    fpm --input-type=dir --output-type=rpm --name=test --architecture=all package-data && \
+    # dir -> tar
+    fpm --input-type=dir --output-type=tar --name=test package-data && \
+    # dir -> empty
+    fpm --input-type=dir --output-type=empty --name=test package-data && \
+    # dir -> freebsd
+    fpm --input-type=dir --output-type=freebsd --name=test package-data && \
+    # dir -> apk
+    fpm --input-type=dir --output-type=apk --name=test --architecture=all package-data && \
+    # dir -> snap
+    fpm --input-type=dir --output-type=snap --name=test --architecture=all package-data && \
+    # dir -> pacman
+    fpm --input-type=dir --output-type=pacman --name=test --architecture=all package-data && \
+    # dir -> sh
+    fpm --input-type=dir --output-type=sh --name=test package-data && \
+    # dir -> zip
+    fpm --input-type=dir --output-type=zip --name=test package-data && \
+
+    # gem -> dir
+    fpm --input-type=gem --output-type=dir test && \
+    # deb -> dir
+    fpm --input-type=deb --output-type=dir --package=deb test_1.0_all.deb && \
+    # npm -> dir
+    fpm --input-type=npm --output-type=dir is-number && \
+    # rpm -> dir
+    fpm --input-type=rpm --output-type=dir --package=rpm test-1.0-1.noarch.rpm && \
+    # tar -> dir
+    fpm --input-type=tar --output-type=dir --package=tar test.tar && \
+    # cpan -> dir
+    fpm --input-type=cpan --output-type=dir Text::Lorem && \
+    # pear -> dir
+    fpm --input-type=pear --output-type=dir Text_Statistics && \
+    # empty -> dir
+    fpm --input-type=empty --output-type=dir --name=empty && \
+    # python -> dir
+    fpm --input-type=python --output-type=dir cowsay && \
+    # snap -> dir
+    fpm --input-type=snap --output-type=dir --package=snap test_1.0_all.snap && \
+    # pacman -> dir
+    fpm --input-type=pacman --output-type=dir --package=pacman test-1.0-1-any.pkg.tar.zst && \
+    # pleaserun -> dir
+    fpm --input-type=pleaserun --output-type=dir --name=pleaserun-test /usr/bin/echo && \
+    # virtualenv -> dir
+    fpm --input-type=virtualenv --output-type=dir cowsay && \
+    # zip -> dir
+    fpm --input-type=zip --output-type=dir --package=zip test.zip && \
+
+    popd && \
+    rm -r /tmp/tests
 
 CMD [ "fpm", "--help" ]
 

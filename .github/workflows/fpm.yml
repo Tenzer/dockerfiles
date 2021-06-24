@@ -34,7 +34,9 @@ jobs:
           context: fpm/
           target: with-entrypoint
           tags: tenzer/fpm:latest
-          platforms: linux/amd64  # TODO: Add arm64 support
+          platforms: |
+            linux/amd64
+            linux/arm64
           push: true
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
@@ -44,6 +46,8 @@ jobs:
           context: fpm/
           target: no-entrypoint
           tags: tenzer/fpm:no-entrypoint
-          platforms: linux/amd64  # TODO: Add arm64 support
+          platforms: |
+            linux/amd64
+            linux/arm64
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
