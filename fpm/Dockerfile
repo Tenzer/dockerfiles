@@ -11,7 +11,8 @@ RUN apt-get update && \
         libarchive-tools \
         make \
         php-pear \
-        python-pip \
+        python3-pip \
+        python-is-python3 \
         rpm \
         squashfs-tools \
         unzip \
