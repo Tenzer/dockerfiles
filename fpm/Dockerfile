@@ -1,4 +1,4 @@
-FROM ruby:3.0-slim-buster AS no-entrypoint
+FROM ruby:3.0-slim-bullseye AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
