@@ -1,4 +1,4 @@
-FROM ruby:3.0-slim-bullseye AS no-entrypoint
+FROM ruby:3-slim AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir \
         virtualenv \
         virtualenv-tools3
 
-ARG NODEJS_VERSION=14.17.1
+ARG NODEJS_VERSION=16.13.0
 ARG TARGETPLATFORM
 RUN arch=x64; \
     [ "$TARGETPLATFORM" == "linux/arm64" ] && arch=arm64; \
@@ -41,7 +41,7 @@ RUN arch=x64; \
 
 ENV PATH="$PATH:/usr/local/node/bin"
 
-RUN gem install fpm --version=1.13.1 && \
+RUN gem install fpm --version=1.14.1 && \
     rm -r ~/.local/share/gem /usr/local/bundle/cache
 
 RUN mkdir /tmp/tests && \
@@ -88,7 +88,7 @@ RUN mkdir /tmp/tests && \
     # empty -> dir
     fpm --input-type=empty --output-type=dir --name=empty && \
     # python -> dir
-    fpm --input-type=python --output-type=dir cowsay && \
+    fpm --input-type=python --output-type=dir --no-python-internal-pip cowsay && \
     # snap -> dir
     fpm --input-type=snap --output-type=dir --package=snap test_1.0_all.snap && \
     # pacman -> dir
