@@ -1,4 +1,4 @@
-FROM ruby:3-slim AS no-entrypoint
+FROM ruby:3.0-slim AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
