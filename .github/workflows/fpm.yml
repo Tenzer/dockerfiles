@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push fpm:latest
-        uses: docker/build-push-action@v2.8.0
+        uses: docker/build-push-action@v2.9.0
         with:
           context: fpm/
           target: with-entrypoint
@@ -41,7 +41,7 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
       - name: Build and push fpm:no-entrypoint
-        uses: docker/build-push-action@v2.8.0
+        uses: docker/build-push-action@v2.9.0
         with:
           context: fpm/
           target: no-entrypoint
