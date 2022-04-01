@@ -41,7 +41,7 @@ RUN arch=x64; \
 
 ENV PATH="$PATH:/usr/local/node/bin"
 
-RUN gem install fpm --version=1.14.1 && \
+RUN gem install fpm --version=1.14.2 && \
     rm -r ~/.local/share/gem /usr/local/bundle/cache
 
 RUN mkdir /tmp/tests && \
