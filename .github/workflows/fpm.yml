@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build and push fpm:latest
-        uses: docker/build-push-action@v2.10.0
+        uses: docker/build-push-action@v3.0.0
         with:
           context: fpm/
           target: with-entrypoint
@@ -58,7 +58,7 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
       - name: Build and push fpm:no-entrypoint
-        uses: docker/build-push-action@v2.10.0
+        uses: docker/build-push-action@v3.0.0
         with:
           context: fpm/
           target: no-entrypoint
