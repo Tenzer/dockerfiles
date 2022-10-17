@@ -2,6 +2,10 @@
 name: http-echo-test
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/http-echo-test.yml
+      - http-echo-test/**
   push:
     branches:
       - main
@@ -9,9 +13,13 @@ on:
       - .github/workflows/http-echo-test.yml
       - http-echo-test/**
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   http-echo-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,7 +50,14 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: Test build
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: http-echo-test/
+
       - name: Build and push
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: http-echo-test/

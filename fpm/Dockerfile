@@ -47,7 +47,8 @@ RUN gem install fpm --version=1.14.2 && \
 RUN mkdir /tmp/tests && \
     pushd /tmp/tests && \
     echo 'This is a test' > package-data && \
-
+    #
+    # Dir to * tests
     # dir -> dir
     fpm --input-type=dir --output-type=dir --name=test package-data && \
     # dir -> deb
@@ -70,7 +71,8 @@ RUN mkdir /tmp/tests && \
     fpm --input-type=dir --output-type=sh --name=test package-data && \
     # dir -> zip
     fpm --input-type=dir --output-type=zip --name=test package-data && \
-
+    #
+    # * to dir tests
     # gem -> dir
     fpm --input-type=gem --output-type=dir test && \
     # deb -> dir
@@ -99,7 +101,8 @@ RUN mkdir /tmp/tests && \
     fpm --input-type=virtualenv --output-type=dir cowsay && \
     # zip -> dir
     fpm --input-type=zip --output-type=dir --package=zip test.zip && \
-
+    #
+    # Cleanup
     popd && \
     rm -r /tmp/tests
 

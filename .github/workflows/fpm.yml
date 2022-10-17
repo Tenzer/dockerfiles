@@ -2,6 +2,10 @@
 name: fpm
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/fpm.yml
+      - fpm/**
   push:
     branches:
       - main
@@ -9,9 +13,13 @@ on:
       - .github/workflows/fpm.yml
       - fpm/**
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   fpm:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,7 +50,15 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: Test build fpm:latest
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: fpm/
+          target: with-entrypoint
+
       - name: Build and push fpm:latest
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: fpm/
@@ -57,7 +73,15 @@ jobs:
           push: true
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
+      - name: Test build fpm:latest
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: fpm/
+          target: no-entrypoint
+
       - name: Build and push fpm:no-entrypoint
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: fpm/
