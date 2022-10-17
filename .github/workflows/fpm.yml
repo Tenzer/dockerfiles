@@ -2,7 +2,13 @@
 name: fpm
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/fpm.yml
+      - fpm/**
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/fpm.yml
       - fpm/**

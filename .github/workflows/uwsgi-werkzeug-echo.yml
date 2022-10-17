@@ -2,7 +2,13 @@
 name: uwsgi-werkzeug-echo
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/uwsgi-werkzeug-echo.yml
+      - uwsgi-werkzeug-echo/**
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/uwsgi-werkzeug-echo.yml
       - uwsgi-werkzeug-echo/**

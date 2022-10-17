@@ -2,7 +2,13 @@
 name: kinesalite
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/kinesalite.yml
+      - kinesalite/**
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/kinesalite.yml
       - kinesalite/**

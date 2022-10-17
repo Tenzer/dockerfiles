@@ -2,7 +2,13 @@
 name: dynalite
 
 on:
+  pull_request:
+    paths:
+      - .github/workflows/dynalite.yml
+      - dynalite/**
   push:
+    branches:
+      - main
     paths:
       - .github/workflows/dynalite.yml
       - dynalite/**
