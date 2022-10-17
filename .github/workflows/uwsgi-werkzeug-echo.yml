@@ -43,6 +43,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build and push
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: uwsgi-werkzeug-echo/

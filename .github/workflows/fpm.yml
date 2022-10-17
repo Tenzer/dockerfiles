@@ -43,6 +43,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build and push fpm:latest
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: fpm/
@@ -58,6 +59,7 @@ jobs:
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
 
       - name: Build and push fpm:no-entrypoint
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
         with:
           context: fpm/
