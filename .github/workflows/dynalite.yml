@@ -3,8 +3,6 @@ name: dynalite
 
 on:
   push:
-    branches:
-      - main
     paths:
       - .github/workflows/dynalite.yml
       - dynalite/**

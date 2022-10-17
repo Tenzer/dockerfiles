@@ -3,8 +3,6 @@ name: uwsgi-werkzeug-echo
 
 on:
   push:
-    branches:
-      - main
     paths:
       - .github/workflows/uwsgi-werkzeug-echo.yml
       - uwsgi-werkzeug-echo/**

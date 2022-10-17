@@ -3,8 +3,6 @@ name: kinesalite
 
 on:
   push:
-    branches:
-      - main
     paths:
       - .github/workflows/kinesalite.yml
       - kinesalite/**

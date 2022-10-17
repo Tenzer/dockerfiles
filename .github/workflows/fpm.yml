@@ -3,8 +3,6 @@ name: fpm
 
 on:
   push:
-    branches:
-      - main
     paths:
       - .github/workflows/fpm.yml
       - fpm/**
