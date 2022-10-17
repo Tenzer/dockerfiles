@@ -9,6 +9,10 @@ on:
       - .github/workflows/dynalite.yml
       - dynalite/**
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   dynalite:
     runs-on: ubuntu-22.04

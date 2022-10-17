@@ -9,6 +9,10 @@ on:
       - .github/workflows/uwsgi-werkzeug-echo.yml
       - uwsgi-werkzeug-echo/**
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   uwsgi-werkzeug-echo:
     runs-on: ubuntu-22.04

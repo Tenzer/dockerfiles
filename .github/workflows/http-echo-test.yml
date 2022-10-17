@@ -9,6 +9,10 @@ on:
       - .github/workflows/http-echo-test.yml
       - http-echo-test/**
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   http-echo-test:
     runs-on: ubuntu-22.04
