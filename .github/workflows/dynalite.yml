@@ -46,6 +46,12 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: Test build
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: dynalite/
+
       - name: Build and push
         if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0

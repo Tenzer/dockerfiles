@@ -46,6 +46,13 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: Test build fpm:latest
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: fpm/
+          target: with-entrypoint
+
       - name: Build and push fpm:latest
         if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3.2.0
@@ -61,6 +68,13 @@ jobs:
             linux/arm64
           push: true
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
+
+      - name: Test build fpm:latest
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: fpm/
+          target: no-entrypoint
 
       - name: Build and push fpm:no-entrypoint
         if: github.ref == 'refs/heads/main'
