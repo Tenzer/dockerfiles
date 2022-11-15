@@ -1,4 +1,4 @@
-FROM ruby:3.0-slim AS no-entrypoint
+FROM ruby:3.1-slim AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -41,7 +41,7 @@ RUN arch=x64; \
 
 ENV PATH="$PATH:/usr/local/node/bin"
 
-RUN gem install fpm --version=1.14.2 && \
+RUN gem install fpm --version=1.15.0 && \
     rm -r ~/.local/share/gem /usr/local/bundle/cache
 
 RUN mkdir /tmp/tests && \
