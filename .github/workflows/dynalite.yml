@@ -52,13 +52,13 @@ jobs:
 
       - name: Test build
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v3.3.0
         with:
           context: dynalite/
 
       - name: Build and push
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v3.3.0
         with:
           context: dynalite/
           tags: |
