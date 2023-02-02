@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "dependencies": {
+        "dynalite": "3.2.2"
+    }
+}
