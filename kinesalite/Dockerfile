@@ -1,16 +1,18 @@
 FROM node:18-alpine
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global \
-    PATH=$PATH:/home/node/.npm-global/bin
-
-RUN apk add --no-cache tini \
-    && apk add --no-cache --virtual .install-deps \
-    && su node -c "npm install --global kinesalite@3.3.3" \
-    && su node -c "npm cache clean --force" \
-    && mkdir /var/lib/kinesalite \
-    && chown node:node /var/lib/kinesalite
+RUN apk add --no-cache tini && \
+    mkdir /var/lib/kinesalite /kinesalite && \
+    chown node:node /var/lib/kinesalite /kinesalite
 
 USER node
+WORKDIR /kinesalite/
+
+COPY --chown=node:node package.json .
+RUN --mount=type=cache,target=/home/node/.npm,uid=1000 \
+    npm install
+
+ENV PATH=$PATH:/kinesalite/node_modules/.bin
+
 EXPOSE 4567
 VOLUME /var/lib/kinesalite
 

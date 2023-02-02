@@ -14,3 +14,12 @@ updates:
     directory: dynalite
     schedule:
       interval: daily
+
+  - package-ecosystem: docker
+    directory: kinesalite
+    schedule:
+      interval: daily
+  - package-ecosystem: npm
+    directory: kinesalite
+    schedule:
+      interval: daily

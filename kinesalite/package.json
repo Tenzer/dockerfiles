@@ -1,0 +1,6 @@
+{
+    "private": true,
+    "dependencies": {
+        "kinesalite": "3.3.3"
+    }
+}
