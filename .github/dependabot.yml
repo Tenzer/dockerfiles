@@ -15,11 +15,30 @@ updates:
     schedule:
       interval: daily
 
+  - package-ecosystem: bundler
+    directory: fpm
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
+    directory: fpm
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: http-echo-test
+    schedule:
+      interval: daily
+
   - package-ecosystem: docker
     directory: kinesalite
     schedule:
       interval: daily
   - package-ecosystem: npm
     directory: kinesalite
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: uwsgi-werkzeug-echo
     schedule:
       interval: daily

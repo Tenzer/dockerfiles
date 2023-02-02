@@ -23,15 +23,14 @@ RUN apt-get update && \
     apt-get clean && \
     rm --recursive /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
         # 52+ does not have easy_install
         "setuptools < 52" \
-    && \
-    pip install --no-cache-dir \
         virtualenv \
         virtualenv-tools3
 
-ARG NODEJS_VERSION=16.13.0
+ARG NODEJS_VERSION=18.13.0
 ARG TARGETPLATFORM
 RUN arch=x64; \
     [ "$TARGETPLATFORM" == "linux/arm64" ] && arch=arm64; \
@@ -41,10 +40,13 @@ RUN arch=x64; \
 
 ENV PATH="$PATH:/usr/local/node/bin"
 
-RUN gem install fpm --version=1.15.1 && \
-    rm -r ~/.local/share/gem /usr/local/bundle/cache
+COPY Gemfile .
+RUN --mount=type=cache,target=/root/.bundle/cache \
+    bundler install
 
-RUN mkdir /tmp/tests && \
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=cache,target=/root/.cpanm \
+    mkdir /tmp/tests && \
     pushd /tmp/tests && \
     echo 'This is a test' > package-data && \
     #
@@ -106,10 +108,10 @@ RUN mkdir /tmp/tests && \
     popd && \
     rm -r /tmp/tests
 
-CMD [ "fpm", "--help" ]
+CMD ["fpm", "--help"]
 
 
 FROM no-entrypoint AS with-entrypoint
 
-ENTRYPOINT [ "fpm" ]
-CMD [ "--help" ]
+ENTRYPOINT ["fpm"]
+CMD ["--help"]
