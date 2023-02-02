@@ -1,15 +1,18 @@
 FROM node:18-alpine
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global \
-    PATH=$PATH:/home/node/.npm-global/bin
-
-RUN apk add --no-cache tini \
-    && su node -c "npm install --global dynalite@3.2.2" \
-    && su node -c "npm cache clean --force" \
-    && mkdir /var/lib/dynalite \
-    && chown node:node /var/lib/dynalite
+RUN apk add --no-cache tini && \
+    mkdir /var/lib/dynalite /dynalite && \
+    chown node:node /var/lib/dynalite /dynalite
 
 USER node
+WORKDIR /dynalite/
+
+COPY --chown=node:node package.json .
+RUN --mount=type=cache,target=/home/node/.npm,uid=1000 \
+    npm install
+
+ENV PATH=$PATH:/dynalite/node_modules/.bin
+
 EXPOSE 4567
 VOLUME /var/lib/dynalite
 
