@@ -52,13 +52,13 @@ jobs:
 
       - name: Test build
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v4.1.0
         with:
           context: kinesalite/
 
       - name: Build and push
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v4.0.0
+        uses: docker/build-push-action@v4.1.0
         with:
           context: kinesalite/
           tags: |
