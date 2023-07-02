@@ -7,11 +7,13 @@ RUN apt-get update && \
         binutils \
         cpanminus \
         cpio \
+        cpp \
         curl \
         libarchive-tools \
         make \
         php-pear \
         python3-pip \
+        python3-virtualenv \
         python-is-python3 \
         rpm \
         squashfs-tools \
@@ -24,13 +26,10 @@ RUN apt-get update && \
     rm --recursive /var/lib/apt/lists/*
 
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install \
-        # 52+ does not have easy_install
-        "setuptools < 52" \
-        virtualenv \
+    pip install --break-system-packages \
         virtualenv-tools3
 
-ARG NODEJS_VERSION=18.13.0
+ARG NODEJS_VERSION=18.16.1
 ARG TARGETPLATFORM
 RUN arch=x64; \
     [ "$TARGETPLATFORM" == "linux/arm64" ] && arch=arm64; \
@@ -92,7 +91,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     # empty -> dir
     fpm --input-type=empty --output-type=dir --name=empty && \
     # python -> dir
-    fpm --input-type=python --output-type=dir --no-python-internal-pip cowsay && \
+    fpm --input-type=python --output-type=dir cowsay && \
     # snap -> dir
     fpm --input-type=snap --output-type=dir --package=snap test_1.0_all.snap && \
     # pacman -> dir
