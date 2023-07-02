@@ -7,6 +7,7 @@ RUN apt-get update && \
         binutils \
         cpanminus \
         cpio \
+        cpp \
         curl \
         libarchive-tools \
         make \
