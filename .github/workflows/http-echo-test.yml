@@ -52,13 +52,13 @@ jobs:
 
       - name: Test build
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v4.2.1
+        uses: docker/build-push-action@v5.0.0
         with:
           context: http-echo-test/
 
       - name: Build and push
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v4.2.1
+        uses: docker/build-push-action@v5.0.0
         with:
           context: http-echo-test/
           tags: |
