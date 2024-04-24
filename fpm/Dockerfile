@@ -29,7 +29,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --break-system-packages \
         virtualenv-tools3
 
-ARG NODEJS_VERSION=18.16.1
+ARG NODEJS_VERSION=20.12.2
 ARG TARGETPLATFORM
 RUN arch=x64; \
     [ "$TARGETPLATFORM" == "linux/arm64" ] && arch=arm64; \
