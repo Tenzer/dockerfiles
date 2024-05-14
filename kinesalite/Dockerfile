@@ -1,8 +1,11 @@
+# syntax=docker/dockerfile:1
 FROM node:22-alpine
 
-RUN apk add --no-cache tini && \
-    mkdir /var/lib/kinesalite /kinesalite && \
+RUN <<EOF
+    apk add --no-cache tini
+    mkdir /var/lib/kinesalite /kinesalite
     chown node:node /var/lib/kinesalite /kinesalite
+EOF
 
 USER node
 WORKDIR /kinesalite/
