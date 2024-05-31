@@ -11,6 +11,7 @@ RUN <<EOF
         cpio \
         cpp \
         curl \
+        gcc \
         libarchive-tools \
         make \
         php-pear \
