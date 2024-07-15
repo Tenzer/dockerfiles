@@ -52,13 +52,13 @@ jobs:
 
       - name: Test build
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.4.0
         with:
           context: uwsgi-werkzeug-echo/
 
       - name: Build and push
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.3.0
+        uses: docker/build-push-action@v6.4.0
         with:
           context: uwsgi-werkzeug-echo/
           tags: |
