@@ -52,14 +52,14 @@ jobs:
 
       - name: Test build fpm:latest
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.8.0
         with:
           context: fpm/
           target: with-entrypoint
 
       - name: Build and push fpm:latest
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.8.0
         with:
           context: fpm/
           target: with-entrypoint
@@ -75,14 +75,14 @@ jobs:
 
       - name: Test build fpm:latest
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.8.0
         with:
           context: fpm/
           target: no-entrypoint
 
       - name: Build and push fpm:no-entrypoint
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.7.0
+        uses: docker/build-push-action@v6.8.0
         with:
           context: fpm/
           target: no-entrypoint
