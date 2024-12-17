@@ -44,15 +44,15 @@ EOF
 
 ENV PATH="$PATH:/usr/local/node/bin"
 
-COPY Gemfile .
+COPY Gemfile /tmp/Gemfile
 RUN --mount=type=cache,target=/root/.bundle/cache \
-    bundler install
+    bundler install --gemfile=/tmp/Gemfile
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=cache,target=/root/.cpanm \
     <<EOF
     mkdir /tmp/tests
-    pushd /tmp/tests
+    pushd /tmp/tests || exit
     echo 'This is a test' > package-data
 
     # Dir to * tests
@@ -110,7 +110,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     fpm --input-type=zip --output-type=dir --package=zip test.zip
 
     # Cleanup
-    popd
+    popd || exit
     rm -r /tmp/tests
 EOF
 
