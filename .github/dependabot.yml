@@ -39,6 +39,11 @@ updates:
       interval: daily
 
   - package-ecosystem: docker
+    directory: localstripe
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
     directory: uwsgi-werkzeug-echo
     schedule:
       interval: daily
