@@ -55,13 +55,13 @@ jobs:
 
       - name: Test build
         if: github.ref != 'refs/heads/main'
-        uses: docker/build-push-action@v6.16.0
+        uses: docker/build-push-action@v6.17.0
         with:
           context: localstripe/
 
       - name: Build and push
         if: github.ref == 'refs/heads/main'
-        uses: docker/build-push-action@v6.16.0
+        uses: docker/build-push-action@v6.17.0
         with:
           context: localstripe/
           tags: |
