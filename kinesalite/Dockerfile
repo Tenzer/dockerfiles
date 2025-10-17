@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:24-alpine
+FROM node:25-alpine
 
 RUN <<EOF
     apk add --no-cache tini
