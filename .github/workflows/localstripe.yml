@@ -66,11 +66,11 @@ jobs:
           context: localstripe/
           tags: |
             tenzer/localstripe:latest
-            tenzer/localstripe:1.15.7
+            tenzer/localstripe:1.15.9
             ghcr.io/tenzer/localstripe:latest
-            ghcr.io/tenzer/localstripe:1.15.7
+            ghcr.io/tenzer/localstripe:1.15.9
             quay.io/tenzerdk/localstripe:latest
-            quay.io/tenzerdk/localstripe:1.15.7
+            quay.io/tenzerdk/localstripe:1.15.9
           platforms: |
             linux/amd64
             linux/arm64
