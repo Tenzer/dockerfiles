@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ruby:4.0.2-slim AS no-entrypoint
+FROM ruby:4.0.3-slim AS no-entrypoint
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
